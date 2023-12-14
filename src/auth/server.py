@@ -36,9 +36,9 @@ def login():
         return "Invlaid Credentials", 401
 
 
-@server.rotue("/validate", method=["POST"])
+@server.route("/validate", methods=["POST"])
 def validate():
-    encoded_jwt = request.headers["Authoerization"]
+    encoded_jwt = request.headers["Authorization"]
 
     if not encoded_jwt:
         return "Missing Credentials", 401
