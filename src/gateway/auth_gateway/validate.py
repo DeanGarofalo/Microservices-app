@@ -1,15 +1,16 @@
 import os, requests
 
 def token(request):
+    print("in validate")
     if not "Authorization" in request.headers:
-        return None, ("MIssing Credentials", 401)
+        return None, ("Missing Credentials", 401)
     token = request.headers["Authorization"]
 
     if not token:
-        return None, ("MIssing Credentials", 401)
+        return None, ("Missing Credentials", 401)
     
     response = requests.post(
-        f"http://{os.environ.get('AUTH_SVC_ADDRESS')}/validate", headers={"Authorization": token}
+        f"http://{os.environ.get('AUTH_SVC_ADDRESS')}/validate", headers={"Authorization": token},
     )
 
     if response.status_code == 200:

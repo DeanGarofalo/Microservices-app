@@ -1,7 +1,7 @@
 import os, gridfs, pika, json
 from flask import Flask, request, send_file
 from flask_pymongo import PyMongo
-from auth import validate
+from auth_gateway import validate
 from auth_svc import access
 from storage import util
 from bson.objectid import ObjectId
@@ -27,10 +27,14 @@ def login():
     
 @server.route("/upload", methods=["POST"])
 def upload():
-    access, errr = validate.token(request)
+
+    access, err = validate.token(request)
+
+    if err:
+        return err
 
     access = json.loads(access)
-
+    
     if access["admin"]:
         if len(request.files) > 1 or len(request.files) < 1:
             return "Exactly 1 file required", 400
