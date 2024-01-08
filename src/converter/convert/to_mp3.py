@@ -15,7 +15,7 @@ def start(message, fs_videos, fs_mp3s, channel):
     tf.write(out.read())
 
     # create audio from temp video file
-    audio = moviepy.editor.VideoClip(tf.name).audio
+    audio = moviepy.editor.VideoFileClip(tf.name).audio
     tf.close()
 
     # write audio to the file
